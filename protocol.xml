@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+***********************************************
+*  Copyright (c), Skyline Communications NV.  *
+***********************************************
+-->
+
+<Protocol xmlns="http://www.skyline.be/protocol">
+	<Name>Skyline Example QActions Caching and Sharing</Name>
+	<Description>Skyline Example - QActions Caching and Sharing</Description>
+	<Version>1.0.0.1</Version>
+	<IntegrationID>DMS-DRV-9558</IntegrationID>
+	<Provider>Skyline Communications</Provider>
+	<Vendor>Skyline Example</Vendor>
+	<VendorOID>1.3.6.1.4.1.8813.2.1218</VendorOID>
+	<DeviceOID>25</DeviceOID>
+	<SNMP includepages="true">auto</SNMP>
+	<ElementType>Example</ElementType>
+	<Type relativeTimers="true" options=";unicode">virtual</Type>
+	<Display defaultPage="General" pageOrder="General;Storing, Caching and Sharing" wideColumnPages="General"/>
+
+	<Compliancies>
+		<CassandraReady>true</CassandraReady>
+		<MinimumRequiredVersion>10.3.0.0 - 12752</MinimumRequiredVersion>
+	</Compliancies>
+
+	<Params>
+		<Param id="2">
+			<Name>AfterStartup</Name>
+			<Description>After Startup</Description>
+			<Type>dummy</Type>
+		</Param>
+		
+		<Param id="9" trending="false">
+			<Name>ReadMe</Name>
+			<Description>Read Me</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Description of this example protocol.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>
+					<![CDATA[
+This protocol demonstrates how to buffer data that needs to be re-used across multiple QAction runs on a given element.
+
+Following different use-case are demonstrated:
+1. Store and Share: Remember/buffer data across multiple runs of QActions simply by storing the data into a parameter.
+	This will cause some extra load due to the need to serialize and deserialize the data and the required parameter gets and sets.
+	In most cases, this is sufficient as the above mentioned performance impact will be neglectable compared to other parts such as datasource access, getting and setting actual data parameters, etc.
+	This is the best and easiest option in most cases. It also allows to chose if stored data needs to persist across element restarts or not simply by adding save option to the buffer parameter.
+	This is the only option allowing to store data across element restarts.
+2. Cache: Cache data for quick access across multiple runs of the same QAction.
+	To be used when method 1 is not performant enough.
+	Some logic will need to take care of refreshing the cache when needed (e.g. after startup).
+3. Cache and Share: Share cached data across multiple QActions.
+	Typically only required when needing to share data across QActions triggered on table parameters (one on table level, one on row level).
+	Some logic will need to take care of refreshing the cache when needed (e.g. after startup).
+	Some extra logic will need to take care of removing obsolete cached data when elements are stopped/deleted to avoid a memory leak.
+					]]>
+				</DefaultValue>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type lines="50">string</Type>
+			</Measurement>
+		</Param>
+		
+		<Param id="100">
+			<Name>Storing_Title_Begin</Name>
+			<Description>Storing Into Parameter(s)</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Storing, Caching and Sharing</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="101">
+			<Name>Storing_Button_QA101</Name>
+			<Type>write</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Storing, Caching and Sharing</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type width="110">button</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Storing - QA101</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="102">
+			<Name>Storing_Button_QA102</Name>
+			<Type>write</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Storing, Caching and Sharing</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type width="110">button</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Storing - QA102</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="110">
+			<Name>Storing_DataParameter</Name>
+			<Description>Stored Data</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>This parameter allows to store serialized data into a single parameter so it can be retrieved and updated via simple get and set parameter calls.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+		</Param>
+		
+		<Param id="200">
+			<Name>Caching_Title_Begin</Name>
+			<Description>Caching Across QAction Runs</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Storing, Caching and Sharing</Page>
+						<Column>1</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="201">
+			<Name>Caching_Button</Name>
+			<Type>write</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Storing, Caching and Sharing</Page>
+						<Column>1</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type width="110">button</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Caching</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		
+		<Param id="300">
+			<Name>Sharing_Title_Begin</Name>
+			<Description>Sharing Cache Across QActions</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Storing, Caching and Sharing</Page>
+						<Column>2</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="301">
+			<Name>Sharing_Button_QA301</Name>
+			<Type>write</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Storing, Caching and Sharing</Page>
+						<Column>2</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type width="110">button</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Sharing - QA301</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="302">
+			<Name>Sharing_Button_QA302</Name>
+			<Type>write</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Storing, Caching and Sharing</Page>
+						<Column>2</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type width="110">button</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Sharing - QA302</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+	</Params>
+
+	<QActions>
+		<QAction id="1" name="Precompiled Code" encoding="csharp" options="precompile" />
+		<QAction id="2" name="After Startup" encoding="csharp" triggers="2" />
+
+		<QAction id="101" name="Store Across Multiple QActions - QA101" encoding="csharp" triggers="101" />
+		<QAction id="102" name="Store Across Multiple QActions - QA102" encoding="csharp" triggers="102" /> 
+
+		<QAction id="201" name="Cache Across Multiple Runs of the Same QAction" encoding="csharp" triggers="201" />
+
+		<QAction id="301" name="Share Across Multiple QActions - QA100" encoding="csharp" triggers="301" />
+		<QAction id="302" name="Share Across Multiple QActions - QA101" encoding="csharp" triggers="302" />
+	</QActions>
+
+	<Groups>
+		<Group id="2">
+			<Name>After Startup</Name>
+			<Description>After Startup</Description>
+			<Type>poll action</Type>
+			<Content>
+				<Action>2</Action>
+			</Content>
+		</Group>
+	</Groups>
+
+	<Triggers>
+		<Trigger id="1">
+			<Name>After Startup</Name>
+			<On>protocol</On>
+			<Time>after startup</Time>
+			<Type>action</Type>
+			<Content>
+				<Id>1</Id>
+			</Content>
+		</Trigger>
+	</Triggers>
+
+	<Actions>
+		<Action id="1">
+			<Name>After Startup Group</Name>
+			<On id="2">group</On>
+			<Type>execute next</Type>
+		</Action>
+		<Action id="2">
+			<Name>After Startup QAction</Name>
+			<On id="2">parameter</On>
+			<Type>run actions</Type>
+		</Action>
+	</Actions>
+
+	<Timers>
+	</Timers>
+
+	<VersionHistory>
+		<Branches>
+			<Branch id="1">
+				<Comment>Main Branch</Comment>
+				<SystemVersions>
+					<SystemVersion id="0">
+						<MajorVersions>
+							<MajorVersion id="0">
+								<MinorVersions>
+									<MinorVersion id="1">
+										<Date>2026-01-09</Date>
+										<Provider>
+											<Author>SVD</Author>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<NewFeature>Store and Share via Parameters</NewFeature>
+											<NewFeature>Cache via static QAction</NewFeature>
+											<NewFeature>Share cache via static ConcurrentDictionary</NewFeature>
+										</Changes>
+									</MinorVersion>
+								</MinorVersions>
+							</MajorVersion>
+						</MajorVersions>
+					</SystemVersion>
+				</SystemVersions>
+			</Branch>
+		</Branches>
+	</VersionHistory>
+
+</Protocol>
