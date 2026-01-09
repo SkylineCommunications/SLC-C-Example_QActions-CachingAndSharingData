@@ -19,7 +19,7 @@ jobs:
   CI:
     uses: SkylineCommunications/_ReusableWorkflows/.github/workflows/Connector Master Workflow.yml@main
     with:
-      sonarCloudProjectName: #TODO: Go to 'https://sonarcloud.io/projects/create' and create a project. Then enter the id of the project as mentioned in the sonarcloud project url here.
+      sonarCloudProjectName: SkylineCommunications_SLC-C-Example_QActions-CachingAndSharingData
     # secrets:
       # These secrets are only required when:
       # - The repository is not part of the SkylineCommunications GitHub Organization.
