@@ -15,3 +15,7 @@ Following different use-case are demonstrated:
 	Typically only required when needing to share data across QActions triggered on table parameters (one on table level, one on row level).
 	Some logic will need to take care of refreshing the cache when needed (e.g. after startup).
 	Some extra logic will need to take care of removing obsolete cached data when elements are stopped/deleted to avoid a memory leak.
+
+# TODO
+
+- Add cleanup mechanism for method 3 (Cache and Share).
