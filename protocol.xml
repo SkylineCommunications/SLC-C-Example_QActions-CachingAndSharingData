@@ -5,6 +5,7 @@
 ***********************************************
 -->
 
+<!-- SuppressValidator 2.44.5 Exceptionally having 3 columns for this example connector -->
 <Protocol xmlns="http://www.skyline.be/protocol">
 	<Name>Skyline Example QActions Caching and Sharing</Name>
 	<Description>Skyline Example - QActions Caching and Sharing</Description>
@@ -99,6 +100,8 @@ Following different use-case are demonstrated:
 			<Name>Storing_Button_QA101</Name>
 			<Type>write</Type>
 			<Information>
+				<Subtext><![CDATA[Button allowing to showcase how to store QAction data in a parameter.
+This page contains 2 Storing button to showcase how such data can be shared across multiple QActions.]]></Subtext>
 			</Information>
 			<Interprete>
 				<RawType>numeric text</RawType>
@@ -129,6 +132,10 @@ Following different use-case are demonstrated:
 			<Name>Storing_Button_QA102</Name>
 			<Type>write</Type>
 			<Information>
+				<Subtext>
+					<![CDATA[Button allowing to showcase how to store QAction data in a parameter.
+This page contains 2 Storing button to showcase how such data can be shared across multiple QActions.]]>
+				</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>numeric text</RawType>
@@ -191,6 +198,9 @@ Following different use-case are demonstrated:
 			<Name>Caching_Button</Name>
 			<Type>write</Type>
 			<Information>
+				<Subtext>
+					<![CDATA[Button allowing to showcase how to cache QAction data for quick and easy access across multiple runs of the same QAction.]]>
+				</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>numeric text</RawType>
@@ -240,6 +250,10 @@ Following different use-case are demonstrated:
 			<Name>Sharing_Button_QA301</Name>
 			<Type>write</Type>
 			<Information>
+				<Subtext>
+					<![CDATA[Button allowing to showcase how to cache QAction data and have such cache available/shared to multiple QActions.
+This page contains 2 of such buttons to showcase how such data can be shared across multiple QActions.]]>
+				</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>numeric text</RawType>
@@ -270,6 +284,10 @@ Following different use-case are demonstrated:
 			<Name>Sharing_Button_QA302</Name>
 			<Type>write</Type>
 			<Information>
+				<Subtext>
+					<![CDATA[Button allowing to showcase how to cache QAction data and have such cache available/shared to multiple QActions.
+This page contains 2 of such buttons to showcase how such data can be shared across multiple QActions.]]>
+				</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>numeric text</RawType>
@@ -381,3 +399,5 @@ Following different use-case are demonstrated:
 	</VersionHistory>
 
 </Protocol>
+
+<!-- /SuppressValidator 2.44.5 -->
