@@ -12,6 +12,10 @@
 		{
 			string key = $"{protocol.DataMinerID}/{protocol.ElementID}";
 			return Data.GetOrAdd(key, (k) => new CachedAndShared());
+
+			/* Keep in mind that the Func passed to the GetOrAdd method could be called more than once for the same key even though the GetOrAdd method will guarantee that only one reference of the object is returned.
+			 * This is due to the fact that it is called outside of the internal locks of the ConcurrentDictionary.
+			 * This means that, it's important to follow the best practice of not performing any complex initialization within the constructor. */
 		}
 
 		public static void Cleanup(SLProtocol protocol)
