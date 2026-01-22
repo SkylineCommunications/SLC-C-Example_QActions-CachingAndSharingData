@@ -13,6 +13,12 @@
 			string key = $"{protocol.DataMinerID}/{protocol.ElementID}";
 			return Data.GetOrAdd(key, (k) => new CachedAndShared());
 		}
+
+		public static void Cleanup(SLProtocol protocol)
+		{
+			string key = $"{protocol.DataMinerID}/{protocol.ElementID}";
+			Data.TryRemove(key, out _);
+		}
 	}
 
 	public class CachedAndShared

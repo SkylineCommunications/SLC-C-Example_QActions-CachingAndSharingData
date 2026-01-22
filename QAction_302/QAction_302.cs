@@ -16,23 +16,20 @@ public static class QAction
 	{
 		try
 		{
-			/* Via singleton will work at first sight but elements running in the same SLScripting process will interfere with each other.
+			/* Use static ConcurrentDictionary in order to isolate data per element.
 			 */
-			{
-				var data = CachedAndShared_Singleton.GetInstance();
+			var data = CachedAndShared_Dictionary.GetData(protocol);
 
-				data.QA302_RunsCount++;
-				protocol.Log($"QA{protocol.QActionID}|Singleton|QA301 Run Count '{data.QA301_RunsCount}' - QA302 Run Count '{data.QA302_RunsCount}'", LogType.DebugInfo, LogLevel.NoLogging);
-			}
+			data.QA302_RunsCount++;
+			protocol.Log($"QA{protocol.QActionID}|Dictionary|QA301 Run Count '{data.QA301_RunsCount}' - QA302 Run Count '{data.QA302_RunsCount}'", LogType.DebugInfo, LogLevel.NoLogging);
 
-			/* Via static dictionary will work fine but will require cleanup when element is stopped.
+			/* !!! Don't use Singleton !!!
+			 * It will seem to work at first sight but elements running in the same SLScripting process will interfere with each other.
 			 */
-			{
-				var data = CachedAndShared_Dictionary.GetData(protocol);
+			////var data = CachedAndShared_Singleton.GetInstance();
 
-				data.QA302_RunsCount++;
-				protocol.Log($"QA{protocol.QActionID}|Dictionary|QA301 Run Count '{data.QA301_RunsCount}' - QA302 Run Count '{data.QA302_RunsCount}'", LogType.DebugInfo, LogLevel.NoLogging);
-			}
+			////data.QA302_RunsCount++;
+			////protocol.Log($"QA{protocol.QActionID}|Singleton|QA301 Run Count '{data.QA301_RunsCount}' - QA302 Run Count '{data.QA302_RunsCount}'", LogType.DebugInfo, LogLevel.NoLogging);
 		}
 		catch (Exception ex)
 		{
