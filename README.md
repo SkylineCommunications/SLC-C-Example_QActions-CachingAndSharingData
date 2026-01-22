@@ -11,7 +11,7 @@ Following different use-case are demonstrated:
 2. Cache: Cache data for quick access across multiple runs of the same QAction.
 	To be used when method 1 is not performant enough.
 	Some logic will need to take care of refreshing the cache when needed (e.g. after startup).
-3. Cache and Share: Share cached data across multiple QActions.
+3. Cache and Share: Share cached data for quick access across multiple QActions.
 	Typically only required when needing to share data across QActions triggered on table parameters (one on table level, one on row level).
 	A ConcurrentDictionary needs to be used to allow safe access from multiple QActions at the same time and also because multiple elements will be accessing the same ConcurrentDictionary instance.
 	Some logic needs to take care of cleaning up cached data when elements are stopped/deleted to avoid a memory leak and after startup to avoid stale data across element restarts.
