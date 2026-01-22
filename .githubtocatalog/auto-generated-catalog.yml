@@ -20,7 +20,7 @@
 #   - User-Defined API: If the Catalog item is a DataMiner Automation script designed as a user-defined API.
 #   - Visual Overview: If the Catalog item is a Microsoft Visio design.
 # 
-type: Connector
+type: Learning & Sample
 # [Required]
 # The ID of the Catalog item.
 # All registered versions for the same ID are shown together in the Catalog.
@@ -29,14 +29,14 @@ type: Connector
 # If the ID is filled in but does not exist yet, a new Catalog item will be registered with this ID.
 # If the ID is filled in but does exist, properties of the item will be overwritten.
 #   Must be a valid GUID.
-id: c4ba7692-fbbc-4826-9ce9-4e94f57e750e
+id: aa892f1d-f739-4f1b-86a3-d7c0b9f13e4a
 # [Required]
 # The human-friendly name of the Catalog item.
 # Can be changed at any time.
 #   Max length: 100 characters.
 #   Cannot contain newlines.
 #   Cannot contain leading or trailing whitespace characters.
-title: Example QActions-CachingAndSharingData
+title: Skyline Example - QActions Caching and Sharing
 # [Optional]
 # General information about the Catalog item.
 #   Max length: 100,000 characters
@@ -57,7 +57,10 @@ documentation_url:
 # People who are responsible for this Catalog item. Might be developers, but this is not required.
 #   The name is required; max 256 characters.
 #   The email and url are optional, and should be in valid email/URL formats.
-owners: []
+owners:
+  - email: simon.vandamme@skyline.be
+    name: Simon Vandamme
+    url: 
 # [Optional]
 # Tags that allow you to categorize your Catalog items.
 #   Max number of tags: 5
