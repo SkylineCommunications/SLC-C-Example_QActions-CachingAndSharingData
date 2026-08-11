@@ -8,7 +8,6 @@
 #   - ChatOps Extension: If the Catalog item is a DataMiner Automation script designed as a ChatOps extension.
 #   - Connector: If the Catalog item is a DataMiner XML connector.
 #   - Custom Solution: If the Catalog item is a DataMiner Solution.
-#   - Data Query: If the Catalog item is a GQI data query.
 #   - Data Transformer: Includes a data transformer that enables you to modify data using a GQI data query before making it available to users in low-code apps or dashboards.
 #   - Dashboard: If the Catalog item is a DataMiner dashboard.
 #   - DevTool: If the Catalog item is a DevTool.
@@ -70,3 +69,19 @@ owners:
 tags:
   - Connector Example
   - example
+# [Optional]
+# The ID of the vendor.
+# This vendor ID can be retrieved using the public Catalog API.
+# If the vendor ID does not exist, the registration or update will fail with HTTP status code 400.
+# If the vendor ID is '00000000-0000-0000-0000-000000000000', the vendor will be unset.
+# If the vendor ID is not provided during the initial registration, the vendor will be unset.
+# If the vendor ID is not provided during an update, the vendor will be unchanged and keep the previously set value.
+#   Must be a valid GUID.
+vendor_id: 
+# [Optional]
+# The name of the market the Catalog item belongs to.
+market_name: 
+# [Optional]
+# The type of the element.
+# This can only be applied to Catalog items with the type Connector.
+element_type: 
